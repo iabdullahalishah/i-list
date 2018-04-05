@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SwipeCellKit
+import ChameleonFramework
 class PrimaryViewController: UITableViewController {
     
     var itemArray = [Item]()
@@ -17,10 +18,39 @@ class PrimaryViewController: UITableViewController {
             loadItems()
         }
     }
+    
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 80.0
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    //MARK: - Setting Colors of Cells
+    
+    override func viewWillAppear(_ animated: Bool) {
+            title = selectedCategory!.name
+            guard let colorHex = selectedCategory?.color else {fatalError()}
+            updateNavBar(withHexCode: colorHex)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        updateNavBar(withHexCode: "1D9BF6")
+    }
+    
+    // MARK: - Nav Bar Setup methods
+    
+    func updateNavBar(withHexCode colorHexCode: String){
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller doesnt Exists")}
+        guard let navBarColor = UIColor(hexString: colorHexCode) else {fatalError()}
+        navBar.barTintColor = navBarColor
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
+        searchBar.barTintColor = navBarColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +68,11 @@ class PrimaryViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! SwipeTableViewCell
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.title
+        if let color = UIColor(hexString: selectedCategory!.color!)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(itemArray.count))
+        {
+            cell.backgroundColor = color
+            cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+        }
         cell.accessoryType = item.done ? .checkmark : .none
         cell.delegate = self
         return cell

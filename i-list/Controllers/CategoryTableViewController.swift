@@ -40,8 +40,8 @@ class CategoryTableViewController: UITableViewController {
         let item = categories[indexPath.row]
         cell.textLabel?.text = item.name
         cell.delegate = self
-        //cell.backgroundColor = UIColor.randomFlat
-        
+        cell.backgroundColor = UIColor(hexString: categories[indexPath.row].color ?? "1D9BF6")
+        cell.textLabel?.textColor = ContrastColorOf(UIColor(hexString: item.color!)!, returnFlat: true)
         return cell
     }
     
@@ -91,6 +91,7 @@ class CategoryTableViewController: UITableViewController {
             
             let newCategroy = Category(context: self.context)
             newCategroy.name = textField.text!
+            newCategroy.color = UIColor.randomFlat.hexValue()
             self.categories.append(newCategroy)
             self.saveCategories()
             
