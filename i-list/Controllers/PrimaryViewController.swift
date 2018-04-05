@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-
+import SwipeCellKit
 class PrimaryViewController: UITableViewController {
     
     var itemArray = [Item]()
@@ -35,10 +35,11 @@ class PrimaryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! SwipeTableViewCell
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.title
         cell.accessoryType = item.done ? .checkmark : .none
+        cell.delegate = self
         return cell
     }
     
@@ -104,8 +105,8 @@ class PrimaryViewController: UITableViewController {
     }
 }
 
-//MARK: - Search bar methods
-extension PrimaryViewController: UISearchBarDelegate {
+//MARK: - Search bar methods and Swipe methods
+extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
@@ -122,8 +123,28 @@ extension PrimaryViewController: UISearchBarDelegate {
             }
         }
     }
-
     
-
-
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+            self.context.delete(self.itemArray[indexPath.row])
+            self.itemArray.remove(at: indexPath.row)
+            self.saveItems()
+            tableView.reloadData()
+        }
+        // customize the action appearance
+        // deleteAction.image = UIImage(named: "delete")
+        
+        return [deleteAction]
+    }
+    
+    /*func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
+        var options = SwipeTableOptions()
+        options.expansionStyle = .destructive
+        //options.transitionStyle = .border
+        return options
+    }*/
 }
+
+
