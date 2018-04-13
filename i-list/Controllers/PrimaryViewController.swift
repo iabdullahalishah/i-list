@@ -19,7 +19,6 @@ class PrimaryViewController: UITableViewController {
         }
     }
     
-    
     @IBOutlet weak var searchBar: UISearchBar!
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -81,11 +80,20 @@ class PrimaryViewController: UITableViewController {
     //MARK: - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        //itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         //context.delete(itemArray[indexPath.row])
         //itemArray.remove(at: indexPath.row)
-        saveItems()
+        //saveItems()
+        //let task = itemArray[indexPath.row]
+        self.performSegue(withIdentifier: "toDescription", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! DescriptionViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedItem = itemArray[indexPath.row]
+        }
     }
     
     //MARK: - Add New Items
