@@ -12,6 +12,7 @@
 		4145C3F72075D86D004F60B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4145C3F52075D86D004F60B8 /* Main.storyboard */; };
 		4145C3F92075D86E004F60B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4145C3F82075D86E004F60B8 /* Assets.xcassets */; };
 		4145C3FC2075D86E004F60B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4145C3FA2075D86E004F60B8 /* LaunchScreen.storyboard */; };
+		4188D7FB2083984500A894D2 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4188D7FA2083984500A894D2 /* NotificationsViewController.swift */; };
 		419B754C20762602005B8C88 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 419B754A20762602005B8C88 /* DataModel.xcdatamodeld */; };
 		419B756F20763FAA005B8C88 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */; };
 		41A21F6D20814AE200E21724 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A21F6C20814AE200E21724 /* DescriptionViewController.swift */; };
@@ -28,6 +29,7 @@
 		4145C3F82075D86E004F60B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4145C3FB2075D86E004F60B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4145C3FD2075D86E004F60B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4188D7FA2083984500A894D2 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationsViewController.swift; path = "i-list/Controllers/NotificationsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		419B754B20762602005B8C88 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryTableViewController.swift; path = "i-list/Controllers/CategoryTableViewController.swift"; sourceTree = SOURCE_ROOT; };
 		41A21F6C20814AE200E21724 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DescriptionViewController.swift; path = "i-list/Controllers/DescriptionViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -99,6 +101,7 @@
 				419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */,
 				4145C3F32075D86D004F60B8 /* PrimaryViewController.swift */,
 				41A21F6C20814AE200E21724 /* DescriptionViewController.swift */,
+				4188D7FA2083984500A894D2 /* NotificationsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				4145C3F42075D86D004F60B8 /* PrimaryViewController.swift in Sources */,
 				419B754C20762602005B8C88 /* DataModel.xcdatamodeld in Sources */,
 				4145C3F22075D86D004F60B8 /* AppDelegate.swift in Sources */,
+				4188D7FB2083984500A894D2 /* NotificationsViewController.swift in Sources */,
 				41A21F6D20814AE200E21724 /* DescriptionViewController.swift in Sources */,
 				419B756F20763FAA005B8C88 /* CategoryTableViewController.swift in Sources */,
 			);

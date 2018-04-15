@@ -24,9 +24,23 @@ class DescriptionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //newDescription.additionalText = descriptionTextView.text!
         descriptionTextView.text = selectedItem?.additionalNote?.additionalText
+        descriptionTextView.textColor = UIColor(hexString: (selectedItem?.parentCategory?.color)!)
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        title = selectedItem?.title
+        guard let colorHex = selectedItem?.parentCategory?.color else {fatalError()}
+        updateNavBar(withHexCode: colorHex)
+    }
+    
+    func updateNavBar(withHexCode colorHexCode: String){
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller doesnt Exists")}
+        guard let navBarColor = UIColor(hexString: colorHexCode) else {fatalError()}
+        navBar.barTintColor = navBarColor
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
@@ -62,6 +76,13 @@ class DescriptionViewController: UIViewController {
             additionallNote = try context.fetch(request)
         } catch {
             print("Error fetching data from coredata \(error)")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SetTimeSegue" {
+            let destinationVC = segue.destination as! NotificationsViewController
+            destinationVC.datePickerIsSelected = false
         }
     }
 }

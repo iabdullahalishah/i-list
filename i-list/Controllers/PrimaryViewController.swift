@@ -20,7 +20,7 @@ class PrimaryViewController: UITableViewController {
     }
     
     @IBOutlet weak var searchBar: UISearchBar!
-    
+    var itemSelected: Item? = nil
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,19 +80,20 @@ class PrimaryViewController: UITableViewController {
     //MARK: - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        //context.delete(itemArray[indexPath.row])
-        //itemArray.remove(at: indexPath.row)
-        //saveItems()
-        //let task = itemArray[indexPath.row]
-        self.performSegue(withIdentifier: "toDescription", sender: self)
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        saveItems()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDescription" {
         let destinationVC = segue.destination as! DescriptionViewController
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedItem = itemArray[indexPath.row]
+        } else {
+            destinationVC.selectedItem = itemSelected
+            print("Holo is triggered")
+            }
         }
     }
     
@@ -169,6 +170,7 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
+        itemSelected = itemArray[indexPath.row]
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             // handle action by updating model with deletion
             self.context.delete(self.itemArray[indexPath.row])
@@ -176,18 +178,39 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
             self.saveItems()
             tableView.reloadData()
         }
+        let moreAction = SwipeAction(style: .default, title: "More") { action, indexPath in
+            // handle action by updating model with deletion
+            
+            let alertController = UIAlertController(title: "Confirm?", message: "Would you like to confirm this action?", preferredStyle: .actionSheet)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+                print("User tapped Cancel")
+            }
+            
+            let descriptionAction = UIAlertAction(title: "Description", style: .default, handler: { (alert) in
+                print("User tapped description")
+                self.performSegue(withIdentifier: "toDescription", sender: self)
+            })
+            
+            let notificationAction = UIAlertAction(title: "Notifications", style: .default, handler: { (alert) in
+                print("User tapped notification action")
+                self.performSegue(withIdentifier: "TimerNotificationFromTasks", sender: self)
+            })
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(descriptionAction)
+            alertController.addAction(notificationAction)
+            //alertController.popoverPresentationController?.sourceRect = self.view.frame
+            alertController.popoverPresentationController?.sourceView = self.view
+            self.present(alertController, animated: true, completion: nil)
+        }
+
         // customize the action appearance
         // deleteAction.image = UIImage(named: "delete")
         
-        return [deleteAction]
+        return [deleteAction,moreAction]
     }
-    
-    /*func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
-        var options = SwipeTableOptions()
-        options.expansionStyle = .destructive
-        //options.transitionStyle = .border
-        return options
-    }*/
+
 }
 
 
