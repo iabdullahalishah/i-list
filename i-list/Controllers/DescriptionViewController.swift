@@ -12,6 +12,7 @@ import ChameleonFramework
 
 class DescriptionViewController: UIViewController {
     
+    //MARK:- Properties
     var additionallNote = [Description]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var selectedItem : Item? {
@@ -19,9 +20,9 @@ class DescriptionViewController: UIViewController {
             loadItems()
         }
     }
-    
     @IBOutlet weak var descriptionTextView: UITextView!
     
+    //MARK:- View Loading fucntions
     override func viewDidLoad() {
         super.viewDidLoad()
         descriptionTextView.text = selectedItem?.additionalNote?.additionalText
@@ -43,6 +44,8 @@ class DescriptionViewController: UIViewController {
         navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
     }
     
+    //MARK:- Function for Save Button
+    
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         let newDescription = Description(context: context)
         newDescription.additionalText = descriptionTextView.text!
@@ -51,6 +54,8 @@ class DescriptionViewController: UIViewController {
         additionallNote.append(newDescription)
         saveDescription()
     }
+    
+    //MARK:- Saving and loadings functions
     
     func saveDescription() {
         do {
@@ -79,10 +84,4 @@ class DescriptionViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SetTimeSegue" {
-            let destinationVC = segue.destination as! NotificationsViewController
-            destinationVC.datePickerIsSelected = false
-        }
-    }
 }

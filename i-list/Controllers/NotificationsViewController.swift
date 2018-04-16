@@ -10,25 +10,41 @@ import UIKit
 import UserNotifications
 class NotificationsViewController: UIViewController {
     
+    //MARK:- IBOutles
+    @IBOutlet weak var titleOfDatePicker: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
-    let notificationCenter = UNUserNotificationCenter.current()
-    var datePickerIsSelected = true
+    @IBOutlet weak var popupView: UIView!
     
+    //MARK:- Properties
+    let notificationCenter = UNUserNotificationCenter.current()
+    var datePickerIsSelected = Bool()
+    var triggerIndentifier = ""
+    var mainCategory = ""
+    
+    //MARK:- VIEW loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         checkNotificationAuthorization()
-        if datePickerIsSelected {
-            datePicker.datePickerMode = .dateAndTime
-        } else {
-            datePicker.datePickerMode = .countDownTimer
-        }
+        titleOfDatePicker.text = triggerIndentifier
+        popupView.layer.cornerRadius = 20
+        popupView.layer.masksToBounds = true
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if datePickerIsSelected {
+         datePicker.datePickerMode = .dateAndTime
+         } else {
+         datePicker.datePickerMode = .countDownTimer
+         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK:- Notification checking and authorization
     
     func requestNotificationAuthorization() {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge];
@@ -58,12 +74,14 @@ class NotificationsViewController: UIViewController {
         }
     }
     
+    //MARK:- Function for set notification
+    
     @IBAction func showNotification(_ sender: Any) {
         let content = setContent()
         if datePickerIsSelected {
             let date = setDate()
             let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
-            let request = UNNotificationRequest(identifier: "OverdueTasksNotification", content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: triggerIndentifier, content: content, trigger: trigger)
             notificationCenter.add(request, withCompletionHandler: { (error) in
                 if let error = error {
                     print("Couldn't add notification. Error: \(error)")
@@ -73,22 +91,29 @@ class NotificationsViewController: UIViewController {
         } else {
             let interval = setTimer()
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
-            let request = UNNotificationRequest(identifier: "OverdueTasksNotification", content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: triggerIndentifier, content: content, trigger: trigger)
             notificationCenter.add(request, withCompletionHandler: { (error) in
                 if let error = error {
                     print("Couldn't add notification. Error: \(error)")
                 }
             })
+            dismiss(animated: true, completion: nil)
         }
     }
+    
+    //MARK:- Cancel Button Function
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    //MARK:- Functions for setting content, date, or timer
     
     func setContent() -> UNMutableNotificationContent
     {
         let content = UNMutableNotificationContent()
-        content.title = "Sweet Phudi"
-        content.body = "You have fuck phudi"
+        content.title = mainCategory
+        content.body = "You have been notified for \(triggerIndentifier)"
         content.sound = UNNotificationSound.default()
-        content.badge = 15
+        content.badge = 1
         return content
     }
     

@@ -12,10 +12,12 @@ import SwipeCellKit
 import ChameleonFramework
 
 class CategoryTableViewController: UITableViewController {
-
+    
+    //MARK:- Properties
     var categories = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    //MARK:- View Loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()

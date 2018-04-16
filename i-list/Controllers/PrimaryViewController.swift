@@ -12,16 +12,19 @@ import SwipeCellKit
 import ChameleonFramework
 class PrimaryViewController: UITableViewController {
     
+    //MARK:- Properties
     var itemArray = [Item]()
     var selectedCategory : Category? {
         didSet{
             loadItems()
         }
     }
-    
     @IBOutlet weak var searchBar: UISearchBar!
     var itemSelected: Item? = nil
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var timerNotification = false
+    
+    //MARK:- View Loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
@@ -85,6 +88,7 @@ class PrimaryViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    //MARK:- Segue Code
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDescription" {
         let destinationVC = segue.destination as! DescriptionViewController
@@ -95,7 +99,25 @@ class PrimaryViewController: UITableViewController {
             print("Holo is triggered")
             }
         }
-    }
+        if segue.identifier == "TimerNotificationFromTasks" {
+            if timerNotification == true {
+                let destinationVC = segue.destination as! NotificationsViewController
+                destinationVC.datePickerIsSelected = false
+                destinationVC.triggerIndentifier = (itemSelected?.title)!
+                destinationVC.mainCategory = (itemSelected?.parentCategory?.name)!
+            } else {
+                let destinationVC = segue.destination as! NotificationsViewController
+                destinationVC.datePickerIsSelected = true
+                destinationVC.triggerIndentifier = (itemSelected?.title)!
+                destinationVC.mainCategory = (itemSelected?.parentCategory?.name)!
+            }
+            
+            
+            //let colorHex = selectedCategory?.color
+            //guard let titleColorrr = UIColor(hexString: colorHex!) else {fatalError()}
+            //destinationVC.titleOfDatePicker?.textColor? = titleColorrr
+            }
+        }
     
     //MARK: - Add New Items
 
@@ -192,14 +214,22 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
                 self.performSegue(withIdentifier: "toDescription", sender: self)
             })
             
-            let notificationAction = UIAlertAction(title: "Notifications", style: .default, handler: { (alert) in
+            let dateNotificationAction = UIAlertAction(title: "Set Date Notification", style: .default, handler: { (alert) in
                 print("User tapped notification action")
                 self.performSegue(withIdentifier: "TimerNotificationFromTasks", sender: self)
+                self.timerNotification = false
+            })
+            
+            let timerNotificationAction = UIAlertAction(title: "Set Timer", style: .default, handler: { (alert) in
+                print("User tapped notification action")
+                self.performSegue(withIdentifier: "TimerNotificationFromTasks", sender: self)
+                self.timerNotification = true
             })
             
             alertController.addAction(cancelAction)
             alertController.addAction(descriptionAction)
-            alertController.addAction(notificationAction)
+            alertController.addAction(dateNotificationAction)
+            alertController.addAction(timerNotificationAction)
             //alertController.popoverPresentationController?.sourceRect = self.view.frame
             alertController.popoverPresentationController?.sourceView = self.view
             self.present(alertController, animated: true, completion: nil)
