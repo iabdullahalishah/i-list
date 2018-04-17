@@ -111,11 +111,13 @@ class PrimaryViewController: UITableViewController {
                 destinationVC.triggerIndentifier = (itemSelected?.title)!
                 destinationVC.mainCategory = (itemSelected?.parentCategory?.name)!
             }
-            
-            
             //let colorHex = selectedCategory?.color
             //guard let titleColorrr = UIColor(hexString: colorHex!) else {fatalError()}
             //destinationVC.titleOfDatePicker?.textColor? = titleColorrr
+            }
+        if segue.identifier == "toGeoNotificationView" {
+            let destinationVC = segue.destination as! GeoNotificationViewController
+            destinationVC.notificationTitle = (itemSelected?.title)!
             }
         }
     

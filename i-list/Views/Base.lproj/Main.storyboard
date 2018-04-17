@@ -6,12 +6,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Geo Notification View Controller-->
+        <!--Map-->
         <scene sceneID="kbp-E9-Ohp">
             <objects>
                 <viewController id="9nI-by-RS2" customClass="GeoNotificationViewController" customModule="i_list" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,21 +20,86 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oND-j0-Oli">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oND-j0-Oli">
+                                <rect key="frame" x="0.0" y="116" width="375" height="439"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="439" id="jrU-YK-ZlT"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="9nI-by-RS2" id="Znd-bZ-b4F"/>
                                     <outletCollection property="gestureRecognizers" destination="ezk-gx-QtR" appends="YES" id="jJj-VX-BTg"/>
                                 </connections>
                             </mapView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Ira-mO-jV9">
+                                <rect key="frame" x="173" y="574" width="154" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="Hg3-6d-Qey"/>
+                                    <constraint firstAttribute="width" constant="150" id="yyr-eM-20U"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="radiusSlider:" destination="9nI-by-RS2" eventType="valueChanged" id="oi0-vW-ez2"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radius:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cey-7r-wXG">
+                                <rect key="frame" x="16" y="578" width="57" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When to notify?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dut-n7-FGx">
+                                <rect key="frame" x="16" y="624" width="121" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fc7-Le-wv7">
+                                <rect key="frame" x="81" y="578" width="75" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hz4-Z5-iMI">
+                                <rect key="frame" x="175" y="621" width="150" height="29"/>
+                                <segments>
+                                    <segment title="Enter"/>
+                                    <segment title="Exit"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentControlAction:" destination="9nI-by-RS2" eventType="valueChanged" id="qc1-Uh-YMx"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Hz4-Z5-iMI" firstAttribute="top" secondItem="Ira-mO-jV9" secondAttribute="bottom" constant="18" id="1Bd-yN-IHU"/>
+                            <constraint firstItem="dut-n7-FGx" firstAttribute="leading" secondItem="cey-7r-wXG" secondAttribute="leading" id="4jd-XO-TnE"/>
+                            <constraint firstItem="Ira-mO-jV9" firstAttribute="leading" secondItem="Hz4-Z5-iMI" secondAttribute="leading" id="5oZ-tP-thL"/>
+                            <constraint firstItem="Ira-mO-jV9" firstAttribute="centerY" secondItem="cey-7r-wXG" secondAttribute="centerY" id="5vu-jQ-arJ"/>
+                            <constraint firstItem="Ira-mO-jV9" firstAttribute="leading" secondItem="Fc7-Le-wv7" secondAttribute="trailing" constant="19" id="FZK-45-NPl"/>
+                            <constraint firstItem="GxM-8X-oNu" firstAttribute="trailing" secondItem="Ira-mO-jV9" secondAttribute="trailing" constant="50" id="Kqz-2g-zRb"/>
+                            <constraint firstItem="Ira-mO-jV9" firstAttribute="top" secondItem="oND-j0-Oli" secondAttribute="bottom" constant="19" id="OK0-gB-Mwb"/>
+                            <constraint firstItem="dut-n7-FGx" firstAttribute="leading" secondItem="Kxi-yd-tas" secondAttribute="leadingMargin" id="Vd5-1R-jLF"/>
+                            <constraint firstItem="dut-n7-FGx" firstAttribute="firstBaseline" secondItem="Hz4-Z5-iMI" secondAttribute="baseline" id="cc4-JT-Cbe"/>
+                            <constraint firstItem="Ira-mO-jV9" firstAttribute="centerY" secondItem="Fc7-Le-wv7" secondAttribute="centerY" id="jAP-OG-pt7"/>
+                            <constraint firstItem="oND-j0-Oli" firstAttribute="leading" secondItem="Kxi-yd-tas" secondAttribute="leading" id="nsC-lg-8sl"/>
+                            <constraint firstAttribute="trailing" secondItem="oND-j0-Oli" secondAttribute="trailing" id="sb5-nx-84g"/>
+                            <constraint firstItem="Ira-mO-jV9" firstAttribute="trailing" secondItem="Hz4-Z5-iMI" secondAttribute="trailing" id="wda-MA-2Xl"/>
+                            <constraint firstItem="oND-j0-Oli" firstAttribute="top" secondItem="GxM-8X-oNu" secondAttribute="top" id="wwR-eo-YeZ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="GxM-8X-oNu"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Map" id="oNF-k3-hAt">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="srm-BP-z6o">
+                            <connections>
+                                <action selector="doneTapped:" destination="9nI-by-RS2" id="cvN-0H-8x4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="oND-j0-Oli" id="9Gi-Qq-jnd"/>
+                        <outlet property="radiusSliderOutlet" destination="Ira-mO-jV9" id="Qva-z7-q0F"/>
+                        <outlet property="radiusValueLabel" destination="Fc7-Le-wv7" id="whc-gN-JrT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jyK-xE-P2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
