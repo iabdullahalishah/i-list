@@ -226,10 +226,17 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
                 self.timerNotification = true
             })
             
+            let GeoNotificationAction = UIAlertAction(title: "Set Location", style: .default, handler: { (alert) in
+                print("User tapped notification action")
+                self.performSegue(withIdentifier: "toGeoNotificationView", sender: self)
+                self.timerNotification = true
+            })
+            
             alertController.addAction(cancelAction)
             alertController.addAction(descriptionAction)
             alertController.addAction(dateNotificationAction)
             alertController.addAction(timerNotificationAction)
+            alertController.addAction(GeoNotificationAction)
             //alertController.popoverPresentationController?.sourceRect = self.view.frame
             alertController.popoverPresentationController?.sourceView = self.view
             self.present(alertController, animated: true, completion: nil)

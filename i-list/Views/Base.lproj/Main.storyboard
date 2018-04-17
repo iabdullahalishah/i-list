@@ -11,6 +11,40 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Geo Notification View Controller-->
+        <scene sceneID="kbp-E9-Ohp">
+            <objects>
+                <viewController id="9nI-by-RS2" customClass="GeoNotificationViewController" customModule="i_list" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kxi-yd-tas">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oND-j0-Oli">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="9nI-by-RS2" id="Znd-bZ-b4F"/>
+                                    <outletCollection property="gestureRecognizers" destination="ezk-gx-QtR" appends="YES" id="jJj-VX-BTg"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="GxM-8X-oNu"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="oND-j0-Oli" id="9Gi-Qq-jnd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jyK-xE-P2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ezk-gx-QtR">
+                    <connections>
+                        <action selector="addRegion:" destination="9nI-by-RS2" id="qjV-98-jIf"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="2840.8000000000002" y="-549.17541229385313"/>
+        </scene>
         <!--Tasks-->
         <scene sceneID="cJY-44-b75">
             <objects>
@@ -53,6 +87,7 @@
                         <outlet property="searchBar" destination="Y4N-YR-6sd" id="zB4-bY-3Ne"/>
                         <segue destination="Hea-mP-kUT" kind="show" identifier="toDescription" id="6zK-Sa-mEg"/>
                         <segue destination="Nk2-2C-PgJ" kind="presentation" identifier="TimerNotificationFromTasks" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="uxo-Aw-Ble"/>
+                        <segue destination="9nI-by-RS2" kind="show" identifier="toGeoNotificationView" id="oaJ-ID-Rlu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8BL-5a-i1o" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -16,6 +16,8 @@
 		419B754C20762602005B8C88 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 419B754A20762602005B8C88 /* DataModel.xcdatamodeld */; };
 		419B756F20763FAA005B8C88 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */; };
 		41A21F6D20814AE200E21724 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A21F6C20814AE200E21724 /* DescriptionViewController.swift */; };
+		41F8361320865F81003676E5 /* GeoNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F8361220865F81003676E5 /* GeoNotificationViewController.swift */; };
+		41F8361520865FE7003676E5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F8361420865FE7003676E5 /* MapKit.framework */; };
 		4FDB1BA1DE6CC600F4938C6E /* Pods_i_list.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE8EEF02796E914C25AD58E /* Pods_i_list.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		419B754B20762602005B8C88 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryTableViewController.swift; path = "i-list/Controllers/CategoryTableViewController.swift"; sourceTree = SOURCE_ROOT; };
 		41A21F6C20814AE200E21724 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DescriptionViewController.swift; path = "i-list/Controllers/DescriptionViewController.swift"; sourceTree = SOURCE_ROOT; };
+		41F8361220865F81003676E5 /* GeoNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeoNotificationViewController.swift; path = "i-list/Controllers/GeoNotificationViewController.swift"; sourceTree = SOURCE_ROOT; };
+		41F8361420865FE7003676E5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CEE8EEF02796E914C25AD58E /* Pods_i_list.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_i_list.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41F8361520865FE7003676E5 /* MapKit.framework in Frameworks */,
 				4FDB1BA1DE6CC600F4938C6E /* Pods_i_list.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +56,7 @@
 		2BFC9271B9DFF18B44E05AB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41F8361420865FE7003676E5 /* MapKit.framework */,
 				CEE8EEF02796E914C25AD58E /* Pods_i_list.framework */,
 			);
 			name = Frameworks;
@@ -102,6 +108,7 @@
 				4145C3F32075D86D004F60B8 /* PrimaryViewController.swift */,
 				41A21F6C20814AE200E21724 /* DescriptionViewController.swift */,
 				4188D7FA2083984500A894D2 /* NotificationsViewController.swift */,
+				41F8361220865F81003676E5 /* GeoNotificationViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -167,6 +174,14 @@
 				TargetAttributes = {
 					4145C3ED2075D86C004F60B8 = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -267,6 +282,7 @@
 				4145C3F22075D86D004F60B8 /* AppDelegate.swift in Sources */,
 				4188D7FB2083984500A894D2 /* NotificationsViewController.swift in Sources */,
 				41A21F6D20814AE200E21724 /* DescriptionViewController.swift in Sources */,
+				41F8361320865F81003676E5 /* GeoNotificationViewController.swift in Sources */,
 				419B756F20763FAA005B8C88 /* CategoryTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

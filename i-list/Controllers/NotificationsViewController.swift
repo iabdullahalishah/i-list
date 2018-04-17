@@ -24,6 +24,7 @@ class NotificationsViewController: UIViewController {
     //MARK:- VIEW loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestNotificationAuthorization()
         checkNotificationAuthorization()
         titleOfDatePicker.text = triggerIndentifier
         popupView.layer.cornerRadius = 20
