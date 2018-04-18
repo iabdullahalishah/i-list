@@ -19,9 +19,10 @@ class GeoNotificationViewController: UIViewController {
     var categories = [Category]()
     @IBOutlet weak var radiusSliderOutlet: UISlider!
     @IBOutlet weak var radiusValueLabel: UILabel!
-    var locationReceiver = Bool()
+    var notifyWhileEntering = Bool()
+    var notifyWhileExiting = Bool()
     var notificationTitle = ""
-    
+    var touchy = CLLocationCoordinate2D()
     //..........................................
     @IBAction func radiusSlider(_ sender: Any) {
         radiusValueLabel.text = String(describing: radiusSliderOutlet.value)
@@ -52,16 +53,19 @@ class GeoNotificationViewController: UIViewController {
         guard let longPress = sender as? UILongPressGestureRecognizer else { return }
         let touchLocation = longPress.location(in: mapView)
         let coordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
+        print("Coordinate = \(coordinate)")
+        touchy = coordinate
+        print("Touchy = \(touchy)")
         let region = CLCircularRegion(center: coordinate, radius: CLLocationDistance(radiusSliderOutlet.value), identifier: notificationTitle)
         mapView.removeOverlays(mapView.overlays)
-        locationManager.startMonitoring(for: region)
+        //locationManager.startMonitoring(for: region)
         let circle = MKCircle(center: coordinate, radius: region.radius)
         mapView.add(circle)
     }
     
     //MARK:- Notification Settings
     
-    func showNotification(title: String, message: String ){
+   /* func showNotification(title: String, message: String ){
         let content = UNMutableNotificationContent()
         content.title = notificationTitle
         content.body = "You have been notified for the geotification for \(notificationTitle)"
@@ -69,21 +73,44 @@ class GeoNotificationViewController: UIViewController {
         content.sound = .default()
         let request = UNNotificationRequest(identifier: notificationTitle, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-    }
+    }*/
     
     //MARK:- Other Functions
     
     @IBAction func doneTapped(_ sender: UIBarButtonItem) {
-        showNotification(title: "", message: "")
+        //let destination = //destination is added by user through interface//
+        let notification = UNMutableNotificationContent()
+        notification.title = notificationTitle
+        notification.body = "Indian Code"
+        notification.sound = UNNotificationSound.default()
+        notification.badge = 1
+        let destRegion = CLCircularRegion(center: touchy, radius: CLLocationDistance(radiusSliderOutlet.value), identifier: notificationTitle)
+        destRegion.notifyOnEntry = notifyWhileEntering
+        print(destRegion.notifyOnEntry.description)
+        destRegion.notifyOnExit = notifyWhileExiting
+        print(destRegion.notifyOnExit.description)
+        locationManager.startMonitoring(for: destRegion)
+        let trigger = UNLocationNotificationTrigger(region: destRegion, repeats: false)
+        let request = UNNotificationRequest(identifier: notificationTitle, content: notification, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+            if error == nil {
+                print("Successful notification")
+            } else {
+                print(error ?? "Error")
+            }
+        })
+        
     }
     
     
     @IBAction func segmentControlAction(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            locationReceiver = true
+            notifyWhileEntering = true
+            notifyWhileExiting = false
         case 1:
-            locationReceiver = false
+            notifyWhileEntering = false
+            notifyWhileExiting = true
         default:
             break
         }
@@ -96,20 +123,20 @@ class GeoNotificationViewController: UIViewController {
 
 extension GeoNotificationViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
         mapView.showsUserLocation = true
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        if locationReceiver == true {
-        showNotification(title: "You have entered the marked location", message: "Yay!!")
+        if notifyWhileEntering == true {
+        //showNotification(title: "You have entered the marked location", message: "Yay!!")
             print("You entered region")
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        if locationReceiver == false {
-        showNotification(title: "You have exited the marked location", message: "Oww!!")
+        if notifyWhileExiting == true {
+        //showNotification(title: "You have exited the marked location", message: "Oww!!")
             print("You exited region")
         }
     }

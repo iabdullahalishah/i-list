@@ -22,7 +22,6 @@ class PrimaryViewController: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     var itemSelected: Item? = nil
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var timerNotification = false
     
     //MARK:- View Loading Functions
     override func viewDidLoad() {
@@ -100,17 +99,9 @@ class PrimaryViewController: UITableViewController {
             }
         }
         if segue.identifier == "TimerNotificationFromTasks" {
-            if timerNotification == true {
-                let destinationVC = segue.destination as! NotificationsViewController
-                destinationVC.datePickerIsSelected = false
-                destinationVC.triggerIndentifier = (itemSelected?.title)!
-                destinationVC.mainCategory = (itemSelected?.parentCategory?.name)!
-            } else {
-                let destinationVC = segue.destination as! NotificationsViewController
-                destinationVC.datePickerIsSelected = true
-                destinationVC.triggerIndentifier = (itemSelected?.title)!
-                destinationVC.mainCategory = (itemSelected?.parentCategory?.name)!
-            }
+            let destinationVC = segue.destination as! NotificationsViewController
+            destinationVC.triggerIndentifier = (itemSelected?.title)!
+            destinationVC.mainCategory = (itemSelected?.parentCategory?.name)!
             //let colorHex = selectedCategory?.color
             //guard let titleColorrr = UIColor(hexString: colorHex!) else {fatalError()}
             //destinationVC.titleOfDatePicker?.textColor? = titleColorrr
@@ -216,28 +207,19 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
                 self.performSegue(withIdentifier: "toDescription", sender: self)
             })
             
-            let dateNotificationAction = UIAlertAction(title: "Set Date Notification", style: .default, handler: { (alert) in
+            let dateNotificationAction = UIAlertAction(title: "Set Time Notification", style: .default, handler: { (alert) in
                 print("User tapped notification action")
                 self.performSegue(withIdentifier: "TimerNotificationFromTasks", sender: self)
-                self.timerNotification = false
-            })
-            
-            let timerNotificationAction = UIAlertAction(title: "Set Timer", style: .default, handler: { (alert) in
-                print("User tapped notification action")
-                self.performSegue(withIdentifier: "TimerNotificationFromTasks", sender: self)
-                self.timerNotification = true
             })
             
             let GeoNotificationAction = UIAlertAction(title: "Set Location", style: .default, handler: { (alert) in
                 print("User tapped notification action")
                 self.performSegue(withIdentifier: "toGeoNotificationView", sender: self)
-                self.timerNotification = true
             })
             
             alertController.addAction(cancelAction)
             alertController.addAction(descriptionAction)
             alertController.addAction(dateNotificationAction)
-            alertController.addAction(timerNotificationAction)
             alertController.addAction(GeoNotificationAction)
             //alertController.popoverPresentationController?.sourceRect = self.view.frame
             alertController.popoverPresentationController?.sourceView = self.view

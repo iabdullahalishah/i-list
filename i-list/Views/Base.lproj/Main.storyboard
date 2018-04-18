@@ -251,6 +251,14 @@
                                             <action selector="cancelButtonTapped:" destination="Nk2-2C-PgJ" eventType="touchUpInside" id="SLl-qe-czO"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAQ-Qk-qu4">
+                                        <rect key="frame" x="248" y="0.0" width="50" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="schedule"/>
+                                        <connections>
+                                            <action selector="switchTimeSelector:" destination="Nk2-2C-PgJ" eventType="touchUpInside" id="aI0-Gt-Mc2"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -282,6 +290,7 @@
                     <connections>
                         <outlet property="datePicker" destination="WbC-y4-0pR" id="uUB-D6-CwD"/>
                         <outlet property="popupView" destination="3Pk-NH-TMz" id="QEi-73-k2H"/>
+                        <outlet property="switchTimerOutlet" destination="FAQ-Qk-qu4" id="zAP-fn-3h7"/>
                         <outlet property="titleOfDatePicker" destination="n8E-cb-XIU" id="dhK-4j-nlY"/>
                     </connections>
                 </viewController>
@@ -351,4 +360,7 @@
             <point key="canvasLocation" x="1215" y="132"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="schedule" width="128" height="128"/>
+    </resources>
 </document>

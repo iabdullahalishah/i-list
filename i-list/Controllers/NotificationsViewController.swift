@@ -14,7 +14,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var titleOfDatePicker: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var popupView: UIView!
-    
+    @IBOutlet weak var switchTimerOutlet: UIButton!
     //MARK:- Properties
     let notificationCenter = UNUserNotificationCenter.current()
     var datePickerIsSelected = Bool()
@@ -33,11 +33,11 @@ class NotificationsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if datePickerIsSelected {
+        /*if datePickerIsSelected {
          datePicker.datePickerMode = .dateAndTime
          } else {
          datePicker.datePickerMode = .countDownTimer
-         }
+         }*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,6 +56,20 @@ class NotificationsViewController: UIViewController {
             } else {
                 print("Did not accept permission.")
             }
+        }
+    }
+    
+    @IBAction func switchTimeSelector(_ sender: UIButton) {
+        if switchTimerOutlet.currentImage == #imageLiteral(resourceName: "sand-clock"){
+            switchTimerOutlet.setImage(#imageLiteral(resourceName: "schedule"), for: .normal)
+            datePickerIsSelected = true
+            datePicker.datePickerMode = .dateAndTime
+            print("Sand clock is tapped")
+        } else if switchTimerOutlet.currentImage == #imageLiteral(resourceName: "schedule") {
+            switchTimerOutlet.setImage(#imageLiteral(resourceName: "sand-clock"), for: .normal)
+            datePickerIsSelected = false
+            datePicker.datePickerMode = .countDownTimer
+            print("Calendar is tapped")
         }
     }
     
