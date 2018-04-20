@@ -202,7 +202,7 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
                 print("User tapped Cancel")
             }
             
-            let descriptionAction = UIAlertAction(title: "Description", style: .default, handler: { (alert) in
+            let descriptionAction = UIAlertAction(title: "Add Note", style: .default, handler: { (alert) in
                 print("User tapped description")
                 self.performSegue(withIdentifier: "toDescription", sender: self)
             })
