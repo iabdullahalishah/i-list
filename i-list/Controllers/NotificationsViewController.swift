@@ -17,7 +17,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var switchTimerOutlet: UIButton!
     //MARK:- Properties
     let notificationCenter = UNUserNotificationCenter.current()
-    var datePickerIsSelected = Bool()
+    var datePickerIsSelected = true
     var triggerIndentifier = ""
     var mainCategory = ""
     

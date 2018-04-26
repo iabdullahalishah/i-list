@@ -92,13 +92,18 @@ class CategoryTableViewController: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
             let newCategroy = Category(context: self.context)
+            if textField.text?.isEmpty ?? true {
+                self.AlertTextfieldIsEmpty()
+            } else {
             newCategroy.name = textField.text!
             newCategroy.color = UIColor.randomFlat.hexValue()
             self.categories.append(newCategroy)
-            self.saveCategories()
+                self.saveCategories() }
             
         }
+        let close = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(action)
+        alert.addAction(close)
         alert.addTextField { (field) in
             textField = field
             textField.placeholder = "Add a new category"
@@ -106,7 +111,16 @@ class CategoryTableViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func AlertTextfieldIsEmpty() {
+        let alert = UIAlertController(title: "Warning" , message: "Please Enter The Name For The New Category Before Hittng Add", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Close", style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
 }
+
+
 
 // MARK: - Swipe Cell Delegate Methods
 extension CategoryTableViewController: SwipeTableViewCellDelegate {

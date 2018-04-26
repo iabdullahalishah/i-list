@@ -117,19 +117,32 @@ class PrimaryViewController: UITableViewController {
     @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New I-LIST Item" , message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+        let action = UIAlertAction(title: "✅", style: .default) { (action) in
             let newItem = Item(context: self.context)
-            newItem.title = textField.text!
+            if textField.text?.isEmpty ?? true {
+                self.AlertTextfieldIsEmpty()
+            }
+            else { newItem.title = textField.text!
             newItem.done = false
             newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem)
-            self.saveItems()
+                self.saveItems() }
             
         }
+        
+        let close = UIAlertAction(title: "❌", style: .cancel, handler: nil)
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create New Item"
             textField = alertTextField
         }
+        alert.addAction(action)
+        alert.addAction(close)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func AlertTextfieldIsEmpty() {
+        let alert = UIAlertController(title: "Warning" , message: "Please Enter The Name For New Item Before Hittng Add", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Close", style: .cancel, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
