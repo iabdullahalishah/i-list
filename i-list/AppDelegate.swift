@@ -19,13 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         //print(urls[urls.count-1] as URL)
-        
-        // Register for push notifications about changes
-        application.registerForRemoteNotifications()
-        
-        // Enable CloudCore syncing
-        CloudCore.enable(persistentContainer: persistentContainer)
-        
         return true
     }
 
@@ -48,20 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     
-    // Notification from CloudKit about changes in remote database
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        // Check if it CloudKit's and CloudCore notification
-        if CloudCore.isCloudCoreNotification(withUserInfo: userInfo) {
-            // Fetch changed data from iCloud
-            CloudCore.fetchAndSave(using: userInfo, to: persistentContainer, error: nil, completion: { (fetchResult) in
-                completionHandler(fetchResult.uiBackgroundFetchResult)
-            })
-        }
-    }
-    
     func applicationWillTerminate(_ application: UIApplication) {
         // Save tokens on exit used to differential sync
-        CloudCore.tokens.saveToUserDefaults()
+        self.saveContext()
     }
     
     // MARK: - Core Data stack

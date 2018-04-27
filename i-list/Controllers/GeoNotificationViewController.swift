@@ -65,7 +65,7 @@ class GeoNotificationViewController: UIViewController {
     
     //MARK:- Notification Settings
     
-   /* func showNotification(title: String, message: String ){
+   func showNotification(title: String, message: String ){
         let content = UNMutableNotificationContent()
         content.title = notificationTitle
         content.body = "You have been notified for the geotification for \(notificationTitle)"
@@ -73,13 +73,13 @@ class GeoNotificationViewController: UIViewController {
         content.sound = .default()
         let request = UNNotificationRequest(identifier: notificationTitle, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-    }*/
+    }
     
     //MARK:- Other Functions
     
     @IBAction func doneTapped(_ sender: UIBarButtonItem) {
         //let destination = //destination is added by user through interface//
-        let notification = UNMutableNotificationContent()
+        /*let notification = UNMutableNotificationContent()
         notification.title = notificationTitle
         notification.body = "Indian Code"
         notification.sound = UNNotificationSound.default()
@@ -99,7 +99,7 @@ class GeoNotificationViewController: UIViewController {
                 print(error ?? "Error")
             }
         })
-        
+        */
     }
     
     
@@ -129,14 +129,14 @@ extension GeoNotificationViewController: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if notifyWhileEntering == true {
-        //showNotification(title: "You have entered the marked location", message: "Yay!!")
+        showNotification(title: "You have entered the marked location", message: "Yay!!")
             print("You entered region")
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if notifyWhileExiting == true {
-        //showNotification(title: "You have exited the marked location", message: "Oww!!")
+        showNotification(title: "You have exited the marked location", message: "Oww!!")
             print("You exited region")
         }
     }

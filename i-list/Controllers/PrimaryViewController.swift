@@ -119,14 +119,18 @@ class PrimaryViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New I-LIST Item" , message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "✅", style: .default) { (action) in
             let newItem = Item(context: self.context)
+            
             if textField.text?.isEmpty ?? true {
                 self.AlertTextfieldIsEmpty()
             }
-            else { newItem.title = textField.text!
+                
+            else {
+            newItem.title = textField.text!
             newItem.done = false
             newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem)
-                self.saveItems() }
+            self.saveItems()
+            }
             
         }
         
