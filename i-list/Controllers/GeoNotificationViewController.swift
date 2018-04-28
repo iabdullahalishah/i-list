@@ -58,7 +58,7 @@ class GeoNotificationViewController: UIViewController {
         print("Touchy = \(touchy)")
         let region = CLCircularRegion(center: coordinate, radius: CLLocationDistance(radiusSliderOutlet.value), identifier: notificationTitle)
         mapView.removeOverlays(mapView.overlays)
-        //locationManager.startMonitoring(for: region)
+        locationManager.startMonitoring(for: region)
         let circle = MKCircle(center: coordinate, radius: region.radius)
         mapView.add(circle)
     }
@@ -77,7 +77,7 @@ class GeoNotificationViewController: UIViewController {
     
     //MARK:- Other Functions
     
-    @IBAction func doneTapped(_ sender: UIBarButtonItem) {
+   /* @IBAction func doneTapped(_ sender: UIBarButtonItem) {
         //let destination = //destination is added by user through interface//
         /*let notification = UNMutableNotificationContent()
         notification.title = notificationTitle
@@ -100,7 +100,7 @@ class GeoNotificationViewController: UIViewController {
             }
         })
         */
-    }
+    }*/
     
     
     @IBAction func segmentControlAction(_ sender: UISegmentedControl) {
@@ -123,7 +123,7 @@ class GeoNotificationViewController: UIViewController {
 
 extension GeoNotificationViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locationManager.stopUpdatingLocation()
+        //locationManager.stopUpdatingLocation()
         mapView.showsUserLocation = true
     }
     

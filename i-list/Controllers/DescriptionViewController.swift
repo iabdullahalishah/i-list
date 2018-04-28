@@ -84,4 +84,8 @@ class DescriptionViewController: UIViewController {
         }
     }
     
+    @IBAction func AddTodayExtension(_ sender: UIButton) {
+        let sharedDefaults = UserDefaults(suiteName: "group.com.asadltd.ShareExtensionDemo")
+        sharedDefaults?.setValue(descriptionTextView.text, forKey: "customKey")
+    }
 }
