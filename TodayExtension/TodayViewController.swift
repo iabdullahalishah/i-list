@@ -18,7 +18,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.asadltd.ShareExtensionDemo")
         let text = sharedDefaults?.value(forKey: "customKey")
-        if let x = UserDefaults.standard.object(forKey: "previousText") as? String {
+        let shouldChange = sharedDefaults?.value(forKey: "allowChange") as? Bool
+        if shouldChange == true {
+        if  let x = UserDefaults.standard.object(forKey: "previousText") as? String {
             label1.text = (text as? String)! + ("\n\(x)")
             UserDefaults.standard.set(label1.text, forKey: "previousText")
         } else {
@@ -26,6 +28,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             UserDefaults.standard.set(label1.text, forKey: "previousText")
         }
         print(text as Any)
+            sharedDefaults?.setValue(false, forKey: "allowChange")
+        } else {
+            label1.text = UserDefaults.standard.object(forKey: "previousText") as? String
+        }
+        label1.textColor = UIColor.blue
+        //label1.text = ""
+        //let str = "Swift 3.0 is the best version of Swift to learn, so if you're starting fresh you should definitely learn Swift 3.0."
+        //let replaced = str.replacingOccurrences(of: "3.0", with: "4.0")
+        //label1.text = replaced
         // Do any additional setup after loading the view from its nib.
     }
     
@@ -38,7 +49,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         if activeDisplayMode == .compact {
             self.preferredContentSize = maxSize
         } else if activeDisplayMode == .expanded {
-            self.preferredContentSize = CGSize(width: maxSize.width, height: 150)
+            self.preferredContentSize = CGSize(width: maxSize.width, height: 350)
         }
     }
     

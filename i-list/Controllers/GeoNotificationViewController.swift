@@ -22,7 +22,9 @@ class GeoNotificationViewController: UIViewController {
     var notifyWhileEntering = Bool()
     var notifyWhileExiting = Bool()
     var notificationTitle = ""
+    var notificationSubTitle = ""
     var touchy = CLLocationCoordinate2D()
+    var circleIdiota = MKCircle()
     //..........................................
     @IBAction func radiusSlider(_ sender: Any) {
         radiusValueLabel.text = String(describing: radiusSliderOutlet.value)
@@ -60,6 +62,7 @@ class GeoNotificationViewController: UIViewController {
         mapView.removeOverlays(mapView.overlays)
         locationManager.startMonitoring(for: region)
         let circle = MKCircle(center: coordinate, radius: region.radius)
+        //UserDefaults.standard.set(circle, forKey: "savedRegion")
         mapView.add(circle)
     }
     
@@ -67,7 +70,7 @@ class GeoNotificationViewController: UIViewController {
     
    func showNotification(title: String, message: String ){
         let content = UNMutableNotificationContent()
-        content.title = notificationTitle
+        content.title = notificationSubTitle
         content.body = "You have been notified for the geotification for \(notificationTitle)"
         content.badge = 1
         content.sound = .default()
@@ -77,7 +80,7 @@ class GeoNotificationViewController: UIViewController {
     
     //MARK:- Other Functions
     
-   /* @IBAction func doneTapped(_ sender: UIBarButtonItem) {
+    @IBAction func doneTapped(_ sender: UIBarButtonItem) {
         //let destination = //destination is added by user through interface//
         /*let notification = UNMutableNotificationContent()
         notification.title = notificationTitle
@@ -100,7 +103,11 @@ class GeoNotificationViewController: UIViewController {
             }
         })
         */
-    }*/
+        //UserDefaults.standard.set(items, forKey: PreferencesKeys.savedItems)
+        print("Button pressed")
+        UserDefaults.standard.set(circleIdiota, forKey: "savedRegion")
+        //mapView.add(circle)
+    }
     
     
     @IBAction func segmentControlAction(_ sender: UISegmentedControl) {

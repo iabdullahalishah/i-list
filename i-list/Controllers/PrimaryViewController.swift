@@ -89,7 +89,7 @@ class PrimaryViewController: UITableViewController {
     
     //MARK:- Segue Code
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDescription" {
+        if segue.identifier == "toDescription"{
         let destinationVC = segue.destination as! DescriptionViewController
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedItem = itemArray[indexPath.row]
@@ -109,8 +109,18 @@ class PrimaryViewController: UITableViewController {
         if segue.identifier == "toGeoNotificationView" {
             let destinationVC = segue.destination as! GeoNotificationViewController
             destinationVC.notificationTitle = (itemSelected?.title)!
+            destinationVC.notificationSubTitle = (itemSelected?.parentCategory?.name)!
+            }
+        if segue.identifier == "toSummary"{
+            let destinationVC = segue.destination as! SummaryViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                destinationVC.selectedItem = itemArray[indexPath.row]
+            } else {
+                destinationVC.selectedItem = itemSelected
+                print("Holo is triggered")
             }
         }
+    }
     
     //MARK: - Add New Items
 
@@ -234,10 +244,16 @@ extension PrimaryViewController: UISearchBarDelegate, SwipeTableViewCellDelegate
                 self.performSegue(withIdentifier: "toGeoNotificationView", sender: self)
             })
             
+            let SummaryAction = UIAlertAction(title: "Summary", style: .default, handler: { (alert) in
+                print("User tapped notification action")
+                self.performSegue(withIdentifier: "toSummary", sender: self)
+            })
+            
             alertController.addAction(cancelAction)
             alertController.addAction(descriptionAction)
             alertController.addAction(dateNotificationAction)
             alertController.addAction(GeoNotificationAction)
+            alertController.addAction(SummaryAction)
             //alertController.popoverPresentationController?.sourceRect = self.view.frame
             alertController.popoverPresentationController?.sourceView = self.view
             self.present(alertController, animated: true, completion: nil)

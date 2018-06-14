@@ -1,8 +1,8 @@
 //
-//  DescriptionViewController.swift
+//  SummaryViewController.swift
 //  i-list
 //
-//  Created by Abdullah  Ali Shah on 14/04/2018.
+//  Created by Abdullah  Ali Shah on 29/04/2018.
 //  Copyright © 2018 Abdullah  Ali Shah. All rights reserved.
 //
 
@@ -10,9 +10,8 @@ import UIKit
 import CoreData
 import ChameleonFramework
 
-class DescriptionViewController: UIViewController {
+class SummaryViewController: UIViewController {
     
-    //MARK:- Properties
     var additionallNote = [Description]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var selectedItem : Item? {
@@ -20,14 +19,36 @@ class DescriptionViewController: UIViewController {
             loadItems()
         }
     }
-    @IBOutlet weak var descriptionTextView: UITextView!
     
-    //MARK:- View Loading fucntions
+    @IBOutlet weak var addToTodaysListButton: UIButton!
+    
+    @IBOutlet weak var categoryResult: UILabel!
+    
+    @IBOutlet weak var itemResult: UILabel!
+    
+    @IBOutlet weak var descriptionResult: UITextView!
+    
+    var allText : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.text = selectedItem?.additionalNote?.additionalText
-        descriptionTextView.textColor = UIColor(hexString: (selectedItem?.parentCategory?.color)!)
-        // Do any additional setup after loading the view, typically from a nib.
+        let x = selectedItem?.additionalNote?.additionalText!
+        let y = selectedItem?.parentCategory?.name!
+        let z = selectedItem?.title!
+        categoryResult.text = y
+        itemResult.text = z
+        if x != nil {
+        descriptionResult.text = x
+        allText = "    Category: \(String(describing: y!)) \n    Item: \(String(describing: z!)) \n    Description:\(String(describing: x!)) \n    〰〰〰〰〰〰〰〰〰〰〰〰〰"
+        } else {descriptionResult.text = "Nil"
+            allText = "    Category: \(String(describing: y!)) \n    Item: \(String(describing: z!)) \n    Description: nil \n    〰〰〰〰〰〰〰〰〰〰〰〰〰" }
+        print(allText)
+        // Do any additional setup after loading the view. \(String(describing: x!))
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,30 +63,7 @@ class DescriptionViewController: UIViewController {
         navBar.barTintColor = navBarColor
         navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
         navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
-    }
-    
-    //MARK:- Function for Save Button
-    
-    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        let newDescription = Description(context: context)
-        newDescription.additionalText = descriptionTextView.text!
-        newDescription.parentItem = selectedItem
-        selectedItem?.additionalNote?.additionalText = descriptionTextView.text
-        additionallNote.append(newDescription)
-        saveDescription()
-    }
-    
-    //MARK:- Saving and loadings functions
-    
-    func saveDescription() {
-        do {
-            try context.save()
-            print("Data is saved")
-            
-        } catch {
-            print ("Error saving context, \(error)")
-        }
-
+        addToTodaysListButton.backgroundColor = navBarColor
     }
     
     func loadItems(with request: NSFetchRequest<Description> =  Description.fetchRequest(), predicate: NSPredicate? = nil) {
@@ -84,9 +82,15 @@ class DescriptionViewController: UIViewController {
         }
     }
     
-    @IBAction func AddTodayExtension(_ sender: UIButton) {
+    @IBAction func addToTodaysListTapped(_ sender: UIButton) {
         let sharedDefaults = UserDefaults(suiteName: "group.com.asadltd.ShareExtensionDemo")
-        sharedDefaults?.setValue(descriptionTextView.text, forKey: "customKey")
+        sharedDefaults?.setValue(allText, forKey: "customKey")
         sharedDefaults?.setValue(true, forKey: "allowChange")
     }
+    
+    @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
+        let activityController = UIActivityViewController(activityItems: [allText], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+    }
+    
 }
