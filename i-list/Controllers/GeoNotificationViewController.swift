@@ -15,16 +15,20 @@ class GeoNotificationViewController: UIViewController {
     
     //MARK:- Properties
     @IBOutlet weak var mapView: MKMapView!
+    
+    
+    
     let locationManager = CLLocationManager()
     var categories = [Category]()
     @IBOutlet weak var radiusSliderOutlet: UISlider!
     @IBOutlet weak var radiusValueLabel: UILabel!
+    @IBOutlet weak var doneButtonOutlet: UIBarButtonItem!
     var notifyWhileEntering = Bool()
     var notifyWhileExiting = Bool()
     var notificationTitle = ""
     var notificationSubTitle = ""
     var touchy = CLLocationCoordinate2D()
-    var circleIdiota = MKCircle()
+    var circleIdiota = CLCircularRegion()
     //..........................................
     @IBAction func radiusSlider(_ sender: Any) {
         radiusValueLabel.text = String(describing: radiusSliderOutlet.value)
@@ -41,6 +45,20 @@ class GeoNotificationViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         // Do any additional setup after loading the view.
+        if let x = UserDefaults.standard.object(forKey: notificationTitle) as? Data {
+            print ("Data available")
+            let decodedData = NSKeyedUnarchiver.unarchiveObject(with: x) as? CLCircularRegion
+            print (decodedData!)
+            let circle = MKCircle(center: (decodedData?.center)!, radius: (decodedData?.radius)!)
+            mapView.add(circle)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = (decodedData?.center)!
+            annotation.title = notificationSubTitle
+            annotation.subtitle = notificationTitle
+            mapView.addAnnotation(annotation)
+        } else {
+            print ("Please enter location")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,8 +80,9 @@ class GeoNotificationViewController: UIViewController {
         mapView.removeOverlays(mapView.overlays)
         locationManager.startMonitoring(for: region)
         let circle = MKCircle(center: coordinate, radius: region.radius)
-        //UserDefaults.standard.set(circle, forKey: "savedRegion")
         mapView.add(circle)
+        circleIdiota = region
+        doneButtonOutlet.isEnabled = true
     }
     
     //MARK:- Notification Settings
@@ -81,32 +100,17 @@ class GeoNotificationViewController: UIViewController {
     //MARK:- Other Functions
     
     @IBAction func doneTapped(_ sender: UIBarButtonItem) {
-        //let destination = //destination is added by user through interface//
-        /*let notification = UNMutableNotificationContent()
-        notification.title = notificationTitle
-        notification.body = "Indian Code"
-        notification.sound = UNNotificationSound.default()
-        notification.badge = 1
-        let destRegion = CLCircularRegion(center: touchy, radius: CLLocationDistance(radiusSliderOutlet.value), identifier: notificationTitle)
-        destRegion.notifyOnEntry = notifyWhileEntering
-        print(destRegion.notifyOnEntry.description)
-        destRegion.notifyOnExit = notifyWhileExiting
-        print(destRegion.notifyOnExit.description)
-        locationManager.startMonitoring(for: destRegion)
-        let trigger = UNLocationNotificationTrigger(region: destRegion, repeats: false)
-        let request = UNNotificationRequest(identifier: notificationTitle, content: notification, trigger: trigger)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-            if error == nil {
-                print("Successful notification")
-            } else {
-                print(error ?? "Error")
-            }
-        })
-        */
-        //UserDefaults.standard.set(items, forKey: PreferencesKeys.savedItems)
-        print("Button pressed")
-        UserDefaults.standard.set(circleIdiota, forKey: "savedRegion")
-        //mapView.add(circle)
+
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: circleIdiota)
+        UserDefaults.standard.set(encodedData, forKey: notificationTitle)
+        //print(circleIdiota.radius)
+        print("Region Saved")
+        print(encodedData)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = circleIdiota.center
+        annotation.title = notificationSubTitle
+        annotation.subtitle = notificationTitle
+        mapView.addAnnotation(annotation)
     }
     
     

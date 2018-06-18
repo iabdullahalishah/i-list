@@ -201,13 +201,14 @@
                         <viewLayoutGuide key="safeArea" id="GxM-8X-oNu"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="oNF-k3-hAt">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="srm-BP-z6o">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="srm-BP-z6o">
                             <connections>
                                 <action selector="doneTapped:" destination="9nI-by-RS2" id="cvN-0H-8x4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButtonOutlet" destination="srm-BP-z6o" id="oGS-6C-85G"/>
                         <outlet property="mapView" destination="oND-j0-Oli" id="9Gi-Qq-jnd"/>
                         <outlet property="radiusSliderOutlet" destination="Ira-mO-jV9" id="Qva-z7-q0F"/>
                         <outlet property="radiusValueLabel" destination="Fc7-Le-wv7" id="whc-gN-JrT"/>

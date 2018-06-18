@@ -86,6 +86,11 @@ class SummaryViewController: UIViewController {
         let sharedDefaults = UserDefaults(suiteName: "group.com.asadltd.ShareExtensionDemo")
         sharedDefaults?.setValue(allText, forKey: "customKey")
         sharedDefaults?.setValue(true, forKey: "allowChange")
+        let alert = UIAlertController(title: "Summary", message: "New task is added to Today's Tasks", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        //alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+        
     }
     
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
