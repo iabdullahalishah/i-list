@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -281,41 +282,97 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s3I-7J-kVJ">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3N1-N5-o1f">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGS-V0-2xB">
-                                <rect key="frame" x="0.0" y="613" width="375" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.22935688500000001" green="0.35470437999999999" blue="0.43165707590000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="Add to Today's Widget">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="AddTodayExtension:" destination="Hea-mP-kUT" eventType="touchUpInside" id="8WF-kQ-ZTV"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Ifd-DZ-1OX">
+                                <rect key="frame" x="0.0" y="587" width="375" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uui-g8-VHe">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="4OC-eD-bDk"/>
+                                        </constraints>
+                                        <state key="normal" image="rgb"/>
+                                        <connections>
+                                            <action selector="colorPaletteButtonTapped:" destination="Hea-mP-kUT" eventType="touchUpInside" id="GBN-2O-mYf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUm-gL-ijW">
+                                        <rect key="frame" x="98.5" y="0.0" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="gcl-Ha-WQf"/>
+                                        </constraints>
+                                        <state key="normal" image="paint-brush"/>
+                                        <connections>
+                                            <action selector="brushButtonTapped:" destination="Hea-mP-kUT" eventType="touchUpInside" id="oxf-N5-SRC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NS3-QS-goz">
+                                        <rect key="frame" x="196.5" y="0.0" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="tCM-dZ-uNe"/>
+                                        </constraints>
+                                        <state key="normal" image="eraser"/>
+                                        <connections>
+                                            <action selector="eraserButtonTapped:" destination="Hea-mP-kUT" eventType="touchUpInside" id="0OT-A2-t87"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQt-zG-M2M">
+                                        <rect key="frame" x="295" y="0.0" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="QmS-ZM-bH5"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="garbage"/>
+                                        <connections>
+                                            <action selector="trashButtonTapped:" destination="Hea-mP-kUT" eventType="touchUpInside" id="d6u-lU-SWE"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="a54-mh-kQf"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="s3I-7J-kVJ" firstAttribute="trailing" secondItem="N7P-bh-PyV" secondAttribute="trailing" id="45q-pA-GJf"/>
+                            <constraint firstItem="Ifd-DZ-1OX" firstAttribute="bottom" secondItem="N7P-bh-PyV" secondAttribute="bottom" id="IH8-Lb-QhO"/>
+                            <constraint firstItem="s3I-7J-kVJ" firstAttribute="top" secondItem="N7P-bh-PyV" secondAttribute="top" id="IPS-9L-MD8"/>
                             <constraint firstItem="3N1-N5-o1f" firstAttribute="top" secondItem="N7P-bh-PyV" secondAttribute="top" id="MV5-xA-iRp"/>
+                            <constraint firstItem="s3I-7J-kVJ" firstAttribute="bottom" secondItem="N7P-bh-PyV" secondAttribute="bottom" id="NNE-pq-y4r"/>
+                            <constraint firstItem="Ifd-DZ-1OX" firstAttribute="trailing" secondItem="N7P-bh-PyV" secondAttribute="trailing" id="WYx-Nm-566"/>
                             <constraint firstAttribute="trailing" secondItem="3N1-N5-o1f" secondAttribute="trailing" id="bAT-5f-DLj"/>
                             <constraint firstItem="3N1-N5-o1f" firstAttribute="leading" secondItem="4ao-Qb-mKH" secondAttribute="leading" id="f47-jo-aaq"/>
+                            <constraint firstItem="s3I-7J-kVJ" firstAttribute="leading" secondItem="N7P-bh-PyV" secondAttribute="leading" id="gHZ-jo-Yzk"/>
+                            <constraint firstItem="Ifd-DZ-1OX" firstAttribute="leading" secondItem="N7P-bh-PyV" secondAttribute="leading" id="ipO-3L-m5B"/>
                             <constraint firstItem="3N1-N5-o1f" firstAttribute="bottom" secondItem="N7P-bh-PyV" secondAttribute="bottom" id="uGb-WL-b39"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N7P-bh-PyV"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="A6b-vA-3XR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="txd-K1-Mgf">
-                            <connections>
-                                <action selector="saveButtonTapped:" destination="Hea-mP-kUT" id="rZM-qV-QTI"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="txd-K1-Mgf">
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="Hea-mP-kUT" id="rZM-qV-QTI"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="compose" id="sZV-nw-JBS">
+                                <connections>
+                                    <action selector="composeButtonTapped:" destination="Hea-mP-kUT" id="2eb-gy-5yM"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonsStackView" destination="Ifd-DZ-1OX" id="CHf-Xm-qAC"/>
                         <outlet property="descriptionTextView" destination="3N1-N5-o1f" id="2bd-ak-yaQ"/>
+                        <outlet property="drawingPad" destination="s3I-7J-kVJ" id="vej-02-IIh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q5H-Lh-Xv4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -485,6 +542,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="eraser" width="512" height="512"/>
+        <image name="garbage" width="512" height="512"/>
+        <image name="paint-brush" width="512" height="512"/>
+        <image name="rgb" width="512" height="512"/>
         <image name="schedule" width="128" height="128"/>
     </resources>
 </document>

@@ -9,4 +9,5 @@ target 'i-list' do
     pod 'SwipeCellKit'
     pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
     pod 'CloudCore', '~> 2.0'
+    pod 'ChromaColorPicker'
 end
