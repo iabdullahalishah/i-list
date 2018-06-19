@@ -28,6 +28,10 @@ class SummaryViewController: UIViewController {
     
     @IBOutlet weak var descriptionResult: UITextView!
     
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var segmentControlOutlet: UISegmentedControl!
+    
     var allText : String = ""
     
     override func viewDidLoad() {
@@ -39,9 +43,12 @@ class SummaryViewController: UIViewController {
         itemResult.text = z
         if x != nil {
         descriptionResult.text = x
-        allText = "    Category: \(String(describing: y!)) \n    Item: \(String(describing: z!)) \n    Description:\(String(describing: x!)) \n    〰〰〰〰〰〰〰〰〰〰〰〰〰"
+        allText = "    Category: \(String(describing: y!)) \n    Item: \(String(describing: z!)) \n    〰〰〰〰〰〰〰〰〰〰〰〰〰"
         } else {descriptionResult.text = "Nil"
-            allText = "    Category: \(String(describing: y!)) \n    Item: \(String(describing: z!)) \n    Description: nil \n    〰〰〰〰〰〰〰〰〰〰〰〰〰" }
+            allText = "    Category: \(String(describing: y!)) \n    Item: \(String(describing: z!)) \n    〰〰〰〰〰〰〰〰〰〰〰〰〰" }
+        if let imageData = selectedItem?.additionalNote?.drawing {
+            imageView.image = UIImage(data: imageData)
+        }
         print(allText)
         // Do any additional setup after loading the view. \(String(describing: x!))
     }
@@ -64,6 +71,7 @@ class SummaryViewController: UIViewController {
         navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
         navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
         addToTodaysListButton.backgroundColor = navBarColor
+        segmentControlOutlet.tintColor = navBarColor
     }
     
     func loadItems(with request: NSFetchRequest<Description> =  Description.fetchRequest(), predicate: NSPredicate? = nil) {
@@ -96,6 +104,21 @@ class SummaryViewController: UIViewController {
     @IBAction func shareButtonTapped(_ sender: UIBarButtonItem) {
         let activityController = UIActivityViewController(activityItems: [allText], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func segmentControl(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            imageView.isHidden = true
+            descriptionResult.isHidden = false
+        case 1:
+            imageView.isHidden = false
+            descriptionResult.isHidden = true
+        default:
+            break
+        }
+        
     }
     
 }

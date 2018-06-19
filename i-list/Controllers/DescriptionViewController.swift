@@ -16,6 +16,7 @@ class DescriptionViewController: UIViewController, ChromaColorPickerDelegate {
     //MARK:- Properties
     var additionallNote = [Description]()
     @IBOutlet weak var drawingPad: UIImageView!
+    @IBOutlet weak var switchBetweenTextAndSketch: UIButton!
     var lastPoint: CGPoint = CGPoint(x: 0, y: 0)
     var currentColor = UIColor.blue.cgColor
     var brushSize: Float = 30.0
@@ -126,12 +127,31 @@ class DescriptionViewController: UIViewController, ChromaColorPickerDelegate {
             print("Error fetching data from coredata \(error)")
         }
     }
+    
     @IBAction func composeButtonTapped(_ sender: UIBarButtonItem) {
         
         drawingPad.isHidden = false
         descriptionTextView.isHidden = true
         buttonsStackView.isHidden = false
         writting = false
+    }
+    
+    
+    @IBAction func switchBetweenTextAndDrawingButton(_ sender: UIButton) {
+        
+        if switchBetweenTextAndSketch.currentImage == #imageLiteral(resourceName: "sketchbook"){
+            switchBetweenTextAndSketch.setImage(#imageLiteral(resourceName: "text"), for: .normal)
+            drawingPad.isHidden = false
+            descriptionTextView.isHidden = true
+            buttonsStackView.isHidden = false
+            writting = false
+        } else if switchBetweenTextAndSketch.currentImage == #imageLiteral(resourceName: "text") {
+            switchBetweenTextAndSketch.setImage(#imageLiteral(resourceName: "sketchbook"), for: .normal)
+            drawingPad.isHidden = true
+            descriptionTextView.isHidden = false
+            buttonsStackView.isHidden = true
+            writting = true
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
