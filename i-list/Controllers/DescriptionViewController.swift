@@ -32,7 +32,6 @@ class DescriptionViewController: UIViewController, ChromaColorPickerDelegate {
     }
     @IBOutlet weak var descriptionTextView: UITextView!
     
-    
     @IBOutlet weak var buttonsStackView: UIStackView!
     
     //MARK:- View Loading fucntions
@@ -57,6 +56,7 @@ class DescriptionViewController: UIViewController, ChromaColorPickerDelegate {
         colorPicker?.isHidden = true
         greyedOut.isHidden = true
         buttonsStackView.isHidden = true
+        descriptionTextView.backgroundColor = ContrastColorOf( UIColor(hexString: (selectedItem?.parentCategory?.color)!)! , returnFlat: true)
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -90,11 +90,18 @@ class DescriptionViewController: UIViewController, ChromaColorPickerDelegate {
         if writting == true {
         selectedItem?.additionalNote?.additionalText = descriptionTextView.text
         additionallNote.append(newDescription)
-        saveDescription() } else {
+        saveDescription()
+        let alert = UIAlertController(title: "Notification", message: "Note is successfully saved", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+        } else {
             if let image = drawingPad.image {
             //selectedItem?.additionalNote?.drawing =
                 selectedItem?.additionalNote?.drawing = UIImageJPEGRepresentation(image, 1)
                 saveDescription()
+                let alert = UIAlertController(title: "Notification", message: "Drawing is successfully saved", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
             }
         }
     }
@@ -126,14 +133,6 @@ class DescriptionViewController: UIViewController, ChromaColorPickerDelegate {
         } catch {
             print("Error fetching data from coredata \(error)")
         }
-    }
-    
-    @IBAction func composeButtonTapped(_ sender: UIBarButtonItem) {
-        
-        drawingPad.isHidden = false
-        descriptionTextView.isHidden = true
-        buttonsStackView.isHidden = false
-        writting = false
     }
     
     

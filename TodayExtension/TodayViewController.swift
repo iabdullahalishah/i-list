@@ -17,17 +17,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         super.viewDidLoad()
         self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.asadltd.ShareExtensionDemo")
+        let todayDate = sharedDefaults?.value(forKey: "creationDate") as? Int
         label1.textColor = UIColor.darkGray
-        
         let date = Date()
         let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
-        if hour == 0 && minutes == 0 {
+        let currentDate = calendar.component(.day, from: date)
+        if currentDate != todayDate {
             UserDefaults.standard.removeObject(forKey: "customKey")
             UserDefaults.standard.removeObject(forKey: "previousText")
             UserDefaults.standard.removeObject(forKey: "allowChange")
-            print(minutes)
             label1.text = "   Nothing added yet"
             //UserDefaults.standard.removeObject(forKey: "customKey")
         } else {
@@ -47,6 +45,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 label1.text = UserDefaults.standard.object(forKey: "previousText") as? String
             }
         }
+        print(todayDate!)
     }
     
     override func didReceiveMemoryWarning() {

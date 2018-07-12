@@ -394,18 +394,11 @@
                         <viewLayoutGuide key="safeArea" id="N7P-bh-PyV"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="A6b-vA-3XR">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="save" id="txd-K1-Mgf">
-                                <connections>
-                                    <action selector="saveButtonTapped:" destination="Hea-mP-kUT" id="rZM-qV-QTI"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="compose" id="sZV-nw-JBS">
-                                <connections>
-                                    <action selector="composeButtonTapped:" destination="Hea-mP-kUT" id="2eb-gy-5yM"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="txd-K1-Mgf">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="Hea-mP-kUT" id="rZM-qV-QTI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="buttonsStackView" destination="Ifd-DZ-1OX" id="CHf-Xm-qAC"/>
@@ -564,12 +557,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Categories" id="tBc-V2-RoM">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="VU8-he-dDQ">
-                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="addButtonPressed:" destination="VwH-VF-JXQ" id="Htf-vC-lHI"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="VU8-he-dDQ">
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="VwH-VF-JXQ" id="Htf-vC-lHI"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="☁" id="jci-xx-nNS">
+                                <connections>
+                                    <action selector="saveToCloud:" destination="VwH-VF-JXQ" id="0wT-eS-War"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="2q7-fc-Het" kind="show" identifier="goToItems" id="ZUN-f1-tRR"/>

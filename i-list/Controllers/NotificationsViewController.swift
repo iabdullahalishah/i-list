@@ -128,7 +128,7 @@ class NotificationsViewController: UIViewController {
         content.title = mainCategory
         content.body = "You have been notified for \(triggerIndentifier)"
         content.sound = UNNotificationSound.default()
-        content.badge = 1
+        content.badge = 0
         return content
     }
     

@@ -16,8 +16,6 @@ class GeoNotificationViewController: UIViewController {
     //MARK:- Properties
     @IBOutlet weak var mapView: MKMapView!
     
-    
-    
     let locationManager = CLLocationManager()
     var categories = [Category]()
     @IBOutlet weak var radiusSliderOutlet: UISlider!
@@ -91,7 +89,7 @@ class GeoNotificationViewController: UIViewController {
         let content = UNMutableNotificationContent()
         content.title = notificationSubTitle
         content.body = "You have been notified for the geotification for \(notificationTitle)"
-        content.badge = 1
+        content.badge = 0
         content.sound = .default()
         let request = UNNotificationRequest(identifier: notificationTitle, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
@@ -111,6 +109,9 @@ class GeoNotificationViewController: UIViewController {
         annotation.title = notificationSubTitle
         annotation.subtitle = notificationTitle
         mapView.addAnnotation(annotation)
+        let alert = UIAlertController(title: "Geo-notification", message: "Region is successfully added", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
     }
     
     

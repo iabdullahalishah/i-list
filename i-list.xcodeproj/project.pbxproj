@@ -17,6 +17,7 @@
 		417B39F82095151A00ECFA4E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417B39F62095151A00ECFA4E /* MainInterface.storyboard */; };
 		417B39FC2095151A00ECFA4E /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 417B39F02095151A00ECFA4E /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		417B3A0220951C9100ECFA4E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 419B754A20762602005B8C88 /* DataModel.xcdatamodeld */; };
+		417F1EE320F6AC010099896E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417F1EE220F6AC010099896E /* CloudKit.framework */; };
 		4188D7FB2083984500A894D2 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4188D7FA2083984500A894D2 /* NotificationsViewController.swift */; };
 		419B754C20762602005B8C88 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 419B754A20762602005B8C88 /* DataModel.xcdatamodeld */; };
 		419B756F20763FAA005B8C88 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */; };
@@ -68,6 +69,7 @@
 		417B39F72095151A00ECFA4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		417B39F92095151A00ECFA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		417B3A012095199400ECFA4E /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
+		417F1EE220F6AC010099896E /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4188D7FA2083984500A894D2 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationsViewController.swift; path = "i-list/Controllers/NotificationsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		419B754B20762602005B8C88 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		419B756E20763FAA005B8C88 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryTableViewController.swift; path = "i-list/Controllers/CategoryTableViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -83,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				417F1EE320F6AC010099896E /* CloudKit.framework in Frameworks */,
 				41F8361520865FE7003676E5 /* MapKit.framework in Frameworks */,
 				4FDB1BA1DE6CC600F4938C6E /* Pods_i_list.framework in Frameworks */,
 			);
@@ -102,6 +105,7 @@
 		2BFC9271B9DFF18B44E05AB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				417F1EE220F6AC010099896E /* CloudKit.framework */,
 				41F8361420865FE7003676E5 /* MapKit.framework */,
 				CEE8EEF02796E914C25AD58E /* Pods_i_list.framework */,
 				417B39F12095151A00ECFA4E /* NotificationCenter.framework */,
@@ -269,7 +273,7 @@
 								enabled = 1;
 							};
 							com.apple.iCloud = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -567,12 +571,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "i-list/i-list.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VTZ756JMSN;
 				INFOPLIST_FILE = "i-list/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.i-ali.i-list";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b6fef28e-0af1-47d6-8513-c4f490413efd";
+				PROVISIONING_PROFILE_SPECIFIER = "Pi List";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -585,12 +595,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "i-list/i-list.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VTZ756JMSN;
 				INFOPLIST_FILE = "i-list/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.i-ali.i-list";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b6fef28e-0af1-47d6-8513-c4f490413efd";
+				PROVISIONING_PROFILE_SPECIFIER = "Pi List";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -600,12 +616,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TodayExtension/TodayExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VTZ756JMSN;
 				INFOPLIST_FILE = TodayExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.i-ali.i-list.TodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "cba1c72e-7d38-43d6-8045-9b3135ffbd2d";
+				PROVISIONING_PROFILE_SPECIFIER = "Pi List Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -616,12 +639,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TodayExtension/TodayExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VTZ756JMSN;
 				INFOPLIST_FILE = TodayExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.i-ali.i-list.TodayExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "cba1c72e-7d38-43d6-8045-9b3135ffbd2d";
+				PROVISIONING_PROFILE_SPECIFIER = "Pi List Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

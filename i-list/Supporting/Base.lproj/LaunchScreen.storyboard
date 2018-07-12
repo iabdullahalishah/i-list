@@ -31,7 +31,7 @@
                                 <color key="textColor" red="0.13333333333333333" green="0.35294117647058826" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plain yet ingenious app, to manage your tasks smartly and effectivley" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aE8-4k-SG0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plain yet ingenious app, to manage your tasks smartly and effectively" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aE8-4k-SG0">
                                 <rect key="frame" x="16" y="504" width="343" height="67"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.13333333333333333" green="0.35294117647058826" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

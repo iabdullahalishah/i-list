@@ -19,6 +19,7 @@ class SummaryViewController: UIViewController {
             loadItems()
         }
     }
+    var currentDate = 0
     
     @IBOutlet weak var addToTodaysListButton: UIButton!
     
@@ -51,6 +52,10 @@ class SummaryViewController: UIViewController {
         }
         print(allText)
         // Do any additional setup after loading the view. \(String(describing: x!))
+        let date = Date()
+        let calendar = Calendar.current
+        currentDate = calendar.component(.day, from: date)
+        //print(currentDate)
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +77,8 @@ class SummaryViewController: UIViewController {
         navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
         addToTodaysListButton.backgroundColor = navBarColor
         segmentControlOutlet.tintColor = navBarColor
+        segmentControlOutlet.backgroundColor = ContrastColorOf( navBarColor , returnFlat: true)
+        addToTodaysListButton.setTitleColor(ContrastColorOf( navBarColor , returnFlat: true) , for: .normal )
     }
     
     func loadItems(with request: NSFetchRequest<Description> =  Description.fetchRequest(), predicate: NSPredicate? = nil) {
@@ -94,10 +101,11 @@ class SummaryViewController: UIViewController {
         let sharedDefaults = UserDefaults(suiteName: "group.com.asadltd.ShareExtensionDemo")
         sharedDefaults?.setValue(allText, forKey: "customKey")
         sharedDefaults?.setValue(true, forKey: "allowChange")
+        sharedDefaults?.setValue(currentDate, forKey: "creationDate")
         let alert = UIAlertController(title: "Summary", message: "New task is added to Today's Tasks", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         //alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        self.present(alert, animated: true)
+        present(alert, animated: true)
         
     }
     

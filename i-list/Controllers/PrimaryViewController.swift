@@ -126,8 +126,8 @@ class PrimaryViewController: UITableViewController {
 
     @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
         var textField = UITextField()
-        let alert = UIAlertController(title: "Add New I-LIST Item" , message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "✅", style: .default) { (action) in
+        let alert = UIAlertController(title: "Add New Item" , message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
             let newItem = Item(context: self.context)
             
             if textField.text?.isEmpty ?? true {
@@ -144,7 +144,7 @@ class PrimaryViewController: UITableViewController {
             
         }
         
-        let close = UIAlertAction(title: "❌", style: .cancel, handler: nil)
+        let close = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create New Item"
             textField = alertTextField

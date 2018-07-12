@@ -10,13 +10,25 @@ import UIKit
 import CoreData
 import SwipeCellKit
 import ChameleonFramework
+import CloudKit
 
 class CategoryTableViewController: UITableViewController {
     
     //MARK:- Properties
     var categories = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+    var itemArray = [Item]()
+    var selectedCategory : Category? {
+        didSet{
+            loadItems()
+        }
+    }
+    var additionallNote = [Description]()
+    var selectedItem : Item? {
+        didSet{
+            loadItems()
+        }
+    }
     //MARK:- View Loading Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +45,12 @@ class CategoryTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print ("total categories \(categories.count)")
         return categories.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cate", for: indexPath) as! SwipeTableViewCell
+        
         let item = categories[indexPath.row]
         cell.textLabel?.text = item.name
         cell.delegate = self
@@ -81,6 +93,39 @@ class CategoryTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    func loadItems(with request: NSFetchRequest<Item> =  Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate , additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from coredata \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    func loadDescription(with request: NSFetchRequest<Description> =  Description.fetchRequest(), predicate: NSPredicate? = nil) {
+        let itemPredicate = NSPredicate(format: "parentItem.title MATCHES %@", selectedItem!.title!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [itemPredicate , additionalPredicate])
+        } else {
+            request.predicate = itemPredicate
+        }
+        
+        do {
+            additionallNote = try context.fetch(request)
+        } catch {
+            print("Error fetching data from coredata \(error)")
+        }
+    }
+    
     // MARK: - Add New Categories
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -93,13 +138,13 @@ class CategoryTableViewController: UITableViewController {
             
             let newCategroy = Category(context: self.context)
             if textField.text?.isEmpty ?? true {
-                self.AlertTextfieldIsEmpty()
+            self.AlertTextfieldIsEmpty()
             } else {
             newCategroy.name = textField.text!
             newCategroy.color = UIColor.randomFlat.hexValue()
             self.categories.append(newCategroy)
-                self.saveCategories() }
-            
+            self.saveCategories()
+            }
         }
         let close = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(action)
@@ -118,10 +163,66 @@ class CategoryTableViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func saveToCloud(_ sender: UIBarButtonItem) {
+        print("Save to cloud pressed")
+        
+        // Sucess in saving Categories
+        let Database = CKContainer.default().privateCloudDatabase
+        for i in 0..<categories.count {
+            let categoryColor = categories[i].color
+            let categoryName = categories[i].name
+            let newCategory = CKRecord(recordType: "Category")
+            newCategory["Name"] = categoryName as CKRecordValue?
+            newCategory["Color"] = categoryColor as CKRecordValue?
+            // Saving items portion
+            selectedCategory = categories[i]
+            loadItems()
+            for j in 0..<itemArray.count {
+                let newTask = CKRecord(recordType: "Task")
+                let reference = CKReference(record: newCategory, action: CKReferenceAction.deleteSelf)
+                newTask["Category"] = reference
+                newTask["Title"] = itemArray[j].title as CKRecordValue?
+                // Saving additional text portion
+                    selectedItem = itemArray[j]
+                    loadDescription()
+                    let newNote = CKRecord(recordType: "Description")
+                    let referenceToTask = CKReference(record: newTask, action: CKReferenceAction.deleteSelf)
+                    newNote["Task"] = referenceToTask
+                    newNote["Note"] = selectedItem?.additionalNote?.additionalText as CKRecordValue?
+                    newNote["Drawing"] = selectedItem?.additionalNote?.drawing as CKRecordValue?
+                    Database.save(newNote, completionHandler: { (record: CKRecord?, error: Error?) in
+                    if error == nil {
+                        print("Additional description of tasks saved")
+                        DispatchQueue.main.async(execute: {
+                        })
+                    } else {
+                        print("Error: \(error.debugDescription)")
+                    }
+                })
+                
+                Database.save(newTask, completionHandler: { (record: CKRecord?, error: Error?) in
+                    if error == nil {
+                        print("Tasks saved")
+                        DispatchQueue.main.async(execute: {
+                        })
+                    } else {
+                        print("Error: \(error.debugDescription)")
+                    }
+                })
+            }
+            Database.save(newCategory, completionHandler: { (record: CKRecord?, error: Error?) in
+                if error == nil {
+                    print("Categories saved")
+                    DispatchQueue.main.async(execute: {
+                    })
+                } else {
+                    print("Error: \(error.debugDescription)")
+                }
+            })
+        }
+    }
 }
-
-
-
 // MARK: - Swipe Cell Delegate Methods
 extension CategoryTableViewController: SwipeTableViewCellDelegate {
     
